@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" fill="none">
+  <rect width="1600" height="1200" fill="transparent"/>
+  <g stroke="#2f80ed" stroke-opacity="0.28" stroke-width="1.4">
+    <path d="M80 220H420L520 320H780L920 180H1220L1350 310H1520"/>
+    <path d="M80 520H360L500 650H760L920 500H1210L1350 650H1520"/>
+    <path d="M80 860H390L540 980H780L930 860H1230L1380 980H1520"/>
+    <path d="M420 220V520"/>
+    <path d="M780 320V650"/>
+    <path d="M1220 180V500"/>
+    <path d="M390 860V520"/>
+    <path d="M930 860V500"/>
+    <path d="M1350 650V310"/>
+  </g>
+  <g fill="#00a8ff" fill-opacity="0.45">
+    <circle cx="420" cy="220" r="7"/>
+    <circle cx="780" cy="320" r="7"/>
+    <circle cx="1220" cy="180" r="7"/>
+    <circle cx="360" cy="520" r="7"/>
+    <circle cx="760" cy="650" r="7"/>
+    <circle cx="1210" cy="500" r="7"/>
+    <circle cx="390" cy="860" r="7"/>
+    <circle cx="780" cy="980" r="7"/>
+    <circle cx="1230" cy="860" r="7"/>
+    <circle cx="1350" cy="650" r="7"/>
+  </g>
+</svg>

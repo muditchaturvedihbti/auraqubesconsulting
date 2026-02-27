@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" fill="none">
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(700 430) rotate(90) scale(520 760)">
+      <stop offset="0" stop-color="#103a72"/>
+      <stop offset="1" stop-color="#060d1e"/>
+    </radialGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2ec7ff"/>
+      <stop offset="1" stop-color="#44ffd1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1400" height="900" fill="url(#bg)"/>
+  <g opacity="0.25" stroke="url(#line)" stroke-width="1.2">
+    <path d="M80 710L270 580L420 640L610 500L790 590L980 450L1150 550L1320 430"/>
+    <path d="M100 510L250 390L420 480L620 360L780 430L980 310L1170 390L1320 300"/>
+    <path d="M90 320L280 220L460 280L610 170L790 250L970 150L1160 220L1310 130"/>
+    <path d="M260 580L250 390L280 220"/>
+    <path d="M420 640L420 480L460 280"/>
+    <path d="M610 500L620 360L610 170"/>
+    <path d="M790 590L780 430L790 250"/>
+    <path d="M980 450L980 310L970 150"/>
+    <path d="M1150 550L1170 390L1160 220"/>
+  </g>
+  <g fill="#42d6ff">
+    <circle cx="270" cy="580" r="5"/><circle cx="420" cy="640" r="5"/><circle cx="610" cy="500" r="5"/>
+    <circle cx="790" cy="590" r="5"/><circle cx="980" cy="450" r="5"/><circle cx="1150" cy="550" r="5"/>
+    <circle cx="250" cy="390" r="5"/><circle cx="420" cy="480" r="5"/><circle cx="620" cy="360" r="5"/>
+    <circle cx="780" cy="430" r="5"/><circle cx="980" cy="310" r="5"/><circle cx="1170" cy="390" r="5"/>
+    <circle cx="280" cy="220" r="5"/><circle cx="460" cy="280" r="5"/><circle cx="610" cy="170" r="5"/>
+    <circle cx="790" cy="250" r="5"/><circle cx="970" cy="150" r="5"/><circle cx="1160" cy="220" r="5"/>
+  </g>
+  <ellipse cx="700" cy="740" rx="460" ry="120" fill="#0f66cc" opacity="0.2"/>
+  <path d="M300 730C430 640 560 590 700 590C840 590 970 640 1100 730" stroke="#34b8ff" stroke-width="2" opacity="0.55"/>
+  <path d="M370 730C470 665 580 630 700 630C820 630 930 665 1030 730" stroke="#7cecff" stroke-width="1.8" opacity="0.65"/>
+</svg>

@@ -1,1 +1,26 @@
-Hi
+AuraQubes Consulting Website
+
+Static multi-page website with primary focus on Salesforce implementation with AI-led execution.
+
+Pages
+- index.html (Home)
+- services.html
+- ai-initiatives.html
+- clients.html
+- about.html
+- contact.html
+
+Assets
+- styles.css
+- script.js
+- assets/ai-network.svg
+
+Image files to place in `assets/`
+- `logo.png` (provided logo)
+- `banner.png` (provided banner)
+
+Run locally
+- Open `index.html` directly in your browser.
+- Optional: run a simple local server from this folder, for example:
+  - `python3 -m http.server 8000`
+  - Then open `http://localhost:8000`
