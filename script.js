@@ -1005,3 +1005,11 @@ tiltTargets.forEach((el) => {
     el.style.transform = '';
   });
 });
+
+function copyToClipboard(email) {
+  navigator.clipboard.writeText(email).then(() => {
+    alert(`Copied: ${email}`);
+  }).catch(err => {
+    console.error('Failed to copy email: ', err);
+  });
+}
