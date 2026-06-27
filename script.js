@@ -1013,3 +1013,188 @@ function copyToClipboard(email) {
     console.error('Failed to copy email: ', err);
   });
 }
+
+// ============================================================
+// VISUAL FX — Spectacular Graphics Layer
+// ============================================================
+
+// 1. Hero constellation / particle canvas
+const initHeroParticles = () => {
+  const heroWrap = document.querySelector('.home-hero-wrap');
+  if (!heroWrap) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const canvas = document.createElement('canvas');
+  canvas.id = 'hero-canvas';
+  canvas.setAttribute('aria-hidden', 'true');
+  canvas.setAttribute('role', 'presentation');
+  heroWrap.insertBefore(canvas, heroWrap.firstChild);
+
+  const ctx = canvas.getContext('2d');
+  let animId;
+
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  const resize = () => {
+    const w = heroWrap.offsetWidth;
+    const h = heroWrap.offsetHeight;
+    canvas.width  = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width  = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+  resize();
+
+  const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(resize) : null;
+  if (ro) ro.observe(heroWrap);
+
+  const COUNT = Math.min(75, Math.max(20, Math.floor(heroWrap.offsetWidth / 18)));
+  const MAX_DIST = 88;
+  const particles = [];
+
+  for (let i = 0; i < COUNT; i++) {
+    particles.push({
+      x:   Math.random() * heroWrap.offsetWidth,
+      y:   Math.random() * heroWrap.offsetHeight,
+      r:   Math.random() * 1.8 + 0.5,
+      vx:  (Math.random() - 0.5) * 0.32,
+      vy:  (Math.random() - 0.5) * 0.32 - 0.06,
+      hue: Math.random() * 50 + 196,
+      a:   Math.random() * 0.5 + 0.25,
+    });
+  }
+
+  const tick = () => {
+    const isDark = document.body.classList.contains('dark-mode');
+    const W = heroWrap.offsetWidth;
+    const H = heroWrap.offsetHeight;
+
+    ctx.clearRect(0, 0, W, H);
+
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0) p.x = W;
+      if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H;
+      if (p.y > H) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = isDark
+        ? `hsla(${p.hue},88%,76%,${p.a})`
+        : `hsla(${p.hue},78%,50%,${p.a * 0.6})`;
+      ctx.fill();
+
+      for (let j = i + 1; j < particles.length; j++) {
+        const q = particles[j];
+        const dx = p.x - q.x;
+        const dy = p.y - q.y;
+        if (Math.abs(dx) > MAX_DIST || Math.abs(dy) > MAX_DIST) continue;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist >= MAX_DIST) continue;
+        const alpha = (1 - dist / MAX_DIST) * (isDark ? 0.36 : 0.18);
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(q.x, q.y);
+        ctx.strokeStyle = isDark
+          ? `hsla(${p.hue},70%,72%,${alpha})`
+          : `hsla(${p.hue},60%,46%,${alpha})`;
+        ctx.lineWidth = 0.55;
+        ctx.stroke();
+      }
+    }
+
+    animId = requestAnimationFrame(tick);
+  };
+
+  tick();
+};
+
+// 2. Sparkle on click
+const initSparkles = () => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+
+  const palette = ['#0a66d7','#00a8ff','#06b6d4','#8b5cf6','#ec4899','#f59e0b','#10b981'];
+
+  document.addEventListener('click', (e) => {
+    const tag = e.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+    if (e.target.closest('.case-bot-card') || e.target.closest('form')) return;
+
+    const count = 10;
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('div');
+      el.className = 'sparkle-burst';
+      const angle = (i / count) * Math.PI * 2 + Math.random() * 0.6;
+      const dist  = 28 + Math.random() * 46;
+      const size  = 3 + Math.random() * 5;
+      const dur   = (0.44 + Math.random() * 0.38).toFixed(2);
+
+      el.style.cssText = [
+        `left:${e.clientX}px`,
+        `top:${e.clientY}px`,
+        `width:${size.toFixed(1)}px`,
+        `height:${size.toFixed(1)}px`,
+        `background:${palette[i % palette.length]}`,
+        `--dx:${(Math.cos(angle) * dist).toFixed(1)}px`,
+        `--dy:${(Math.sin(angle) * dist).toFixed(1)}px`,
+        `--dur:${dur}s`,
+      ].join(';');
+
+      document.body.appendChild(el);
+      el.addEventListener('animationend', () => el.remove(), { once: true });
+    }
+  });
+};
+
+// 3. Magnetic button pull effect
+const initMagneticButtons = () => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+
+  document.querySelectorAll('.btn-primary, .btn-secondary').forEach((btn) => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const dx = ((e.clientX - (rect.left + rect.width  / 2)) / rect.width)  * 9;
+      const dy = ((e.clientY - (rect.top  + rect.height / 2)) / rect.height) * 9;
+      btn.style.transform = `translate(${dx.toFixed(2)}px, ${(dy - 2).toFixed(2)}px)`;
+    });
+    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+  });
+};
+
+// 4. Floating geometric shapes in hero
+const initGeoShapes = () => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const heroWrap = document.querySelector('.home-hero-wrap');
+  if (!heroWrap) return;
+
+  const defs = [
+    { size: 58, top: '11%', left: '3%',  dur: '20s', delay: '0s',   r: '50%' },
+    { size: 36, top: '72%', left: '4%',  dur: '26s', delay: '-8s',  r: '30%' },
+    { size: 72, top: '20%', right: '3%', dur: '24s', delay: '-5s',  r: '50%' },
+    { size: 44, top: '68%', right: '5%', dur: '18s', delay: '-12s', r: '40% 60%' },
+    { size: 52, top: '50%', left: '8%',  dur: '22s', delay: '-15s', r: '50%' },
+  ];
+
+  defs.forEach(({ size, top, left, right, dur, delay, r }) => {
+    const el = document.createElement('div');
+    el.className = 'geo-shape';
+    Object.assign(el.style, {
+      width: `${size}px`, height: `${size}px`,
+      top, borderRadius: r,
+      animationDuration: dur, animationDelay: delay,
+      ...(left ? { left } : { right }),
+    });
+    heroWrap.appendChild(el);
+  });
+};
+
+initHeroParticles();
+initSparkles();
+initMagneticButtons();
+initGeoShapes();
